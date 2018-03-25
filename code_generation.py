@@ -33,7 +33,7 @@ def RandomHtml():
 def RandomSection():
     global css
     global count
-    for x in range(0,random.randrange(5,30)):
+    for x in range(0,random.randrange(5,10)):
         random_header_number = random.randrange(3,5)
         if not '<h'+str(random_header_number)+' id=a"'+str(count)+'">' in css_contents:
             css_contents[count] = '<h'+str(random_header_number)+'>'
@@ -63,7 +63,7 @@ def RandomCSS():
         string_css += '#a'+str(x)+' {\r\n'
         string_css += 'color: #%02X%02X%02X' %(r(),r(),r())+';\r\n'
         string_css += 'font-family: '+fonts[random.randrange(0, len(fonts))]+';\r\n'
-        string_css += 'font-size: '+str(random.randrange(10, 40)) +'px;\r\n'
+        string_css += 'font-size: '+str(random.randrange(10, 25)) +'px;\r\n'
         string_css += 'font-style: '+font_style[random.randrange(0, len(font_style))]+';\r\n'
         string_css += 'font-weight: '+font_weight[random.randrange(0, len(font_weight))]+';\r\n'
         string_css += 'text-align: '+font_align[random.randrange(0, len(font_align))]+';\r\n}\r\n'
