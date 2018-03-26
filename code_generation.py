@@ -29,7 +29,7 @@ def RandomHtml():
     yield '</body>\r\n</html>\r\n'
     RandomCSS()
 
-#
+#generate a random section
 def RandomSection():
     global css
     global count
@@ -46,6 +46,7 @@ def RandomSection():
         yield '</p>\r'
         yield ('\n')
 
+#generate a random sentence using random range function
 def RandomSentence():
     global count
     num_of_words = random.randrange(5, 20)
