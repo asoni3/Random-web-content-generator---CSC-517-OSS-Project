@@ -79,10 +79,10 @@ def Output(generator):
         for g in generator: Output(g)
 
 #As of now, we are creating 5 random files
-if not os.path.exists(os.getcwd()+'/Generated_HTML_Files/'):
-    os.makedirs(os.getcwd()+'/Generated_HTML_Files/')
+# if not os.path.exists(os.getcwd()+'/Generated_HTML_Files/'):
+#     os.makedirs(os.getcwd()+'/Generated_HTML_Files/')
 
-os.chdir(os.getcwd()+'/Generated_HTML_Files/')
+# os.chdir(os.getcwd()+'/Generated_HTML_Files/')
 for x in range(0,5):
     html = ''
     css_contents = {}
