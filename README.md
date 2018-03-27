@@ -18,7 +18,7 @@ http://www.python.org/getit/
 
 In order to generate html files repository needs to be cloned in order to generate random content html files.
 ```
-$ cd randomhtml
+$ cd Random-web-content-generator---CSC-517-OSS-Project
 $ python code_generation.py 
 ```
 
