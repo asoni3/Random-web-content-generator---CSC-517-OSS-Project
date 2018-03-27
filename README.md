@@ -16,10 +16,10 @@ http://www.python.org/getit/
 ## Quick Start
 
 In order to generate html files repository needs to be cloned in order to generate random content html files.
-
+```
 $ cd randomhtml
 $ python code_generation.py 
-
+```
 
 ## Running the tests
 
