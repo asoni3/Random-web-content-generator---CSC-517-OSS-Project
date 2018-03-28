@@ -27,4 +27,6 @@ $ python code_generation.py
 Some of the random content html files had been generated while testing the script and can be found in the Generated_HTML_Files folder in the repository.
 
 
-
+## Screencast Links
+* [Part-1](https://youtu.be/FDZnandweaQ)
+* [Part-2](https://youtu.be/cM3nlMV2HSQ)
