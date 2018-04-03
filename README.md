@@ -29,5 +29,4 @@ Some of the random content html files had been generated while testing the scrip
 * [Link](https://github.com/asoni3/servo/tree/master/etc) to forked servo containing files ([start_servo.py](https://github.com/asoni3/servo/blob/master/etc/start_servo.py) and [servo_automation_screenshot.py](https://github.com/asoni3/servo/blob/master/etc/servo_automation_screenshot.py))
 
 ## Screencast Links ()
-* [Part-1](https://youtu.be/FDZnandweaQ)
-* [Part-2](https://youtu.be/cM3nlMV2HSQ)
+* https://tinyurl.com/y9yxpvzf
