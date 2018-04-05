@@ -28,5 +28,6 @@ Some of the random content html files had been generated while testing the scrip
 * [Link](https://github.com/servo/servo/pull/20448) to pull request
 * [Link](https://github.com/asoni3/servo/tree/master/etc) to forked servo containing files ([start_servo.py](https://github.com/asoni3/servo/blob/master/etc/start_servo.py) and [servo_automation_screenshot.py](https://github.com/asoni3/servo/blob/master/etc/servo_automation_screenshot.py))
 
-## Screencast Links ()
-* https://tinyurl.com/y9yxpvzf
+## Screencast Links
+* [Watch Screencast](https://tinyurl.com/y9yxpvzf)
+* We highly recommend atleast skimming through the screencast to get a better understanding
