@@ -14,6 +14,14 @@ For other Linux flavors, OS X and Windows, packages are available at
 
 http://www.python.org/getit/
 
+You would need to install geckodriver and selenium.
+Install selenium:
+```
+$ pip install selenium
+```
+Install geckodriver:
+https://github.com/mozilla/geckodriver
+
 ## Quick Start
 
 In order to generate html files repository needs to be cloned in order to generate random content html files.
