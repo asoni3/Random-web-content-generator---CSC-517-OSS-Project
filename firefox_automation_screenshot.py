@@ -1,7 +1,3 @@
-# Resolution for 1200x800 has to have dimension of
-# .set_window_size(1229,881)
-
-
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.keys import Keys
@@ -9,6 +5,7 @@ import time
 import os
 import sys
 import getopt  # for command line interaction
+from PIL import Image
 
 
 def main(argv):
@@ -34,24 +31,28 @@ def main(argv):
     for x in range(num_of_files):
         file = os.path.abspath("file" + str(x) + ".html")
         browser.get("file:///" + file)  # go to html page withe firefox
-        set_viewport_size(browser, width, height)
+        set_viewport(browser, width, height,x)
         browser.save_screenshot("screen" + str(x) + ".png")  # saves the current screen
     browser.close()
 
 
-def set_viewport_size(driver, width, height):
-    window_size = driver.execute_script("""
-        return [window.outerWidth - window.innerWidth + arguments[0],
-          window.outerHeight - window.innerHeight + arguments[1]];
-        """, width, height)
-    driver.set_window_size(*window_size)
-
-
+def set_viewport(driver, width, height,num_file):
+    driver.set_window_position(0,0)
+    driver.set_window_size(width,height)
+    driver.save_screenshot("screen" + str(num_file) + ".png")
+    img= Image.open("screen" + str(num_file) + ".png")
+    img_width, img_height=img.size
+    if img_width!=width:
+        width=width-(img_width-width)#correction to width length
+    if img_height!=height:
+        height=height-(img_height-height) #correction to height length
+    driver.set_window_size(width,height)
+    
 if __name__ == "__main__":
     if len(sys.argv) < 2:
         print('Argument input is required in the format')
         print(
-            'python3 etc/servo_automation_screenshot.py -r <resolution> -n <numOfFiles>')
+            'python3 etc/servo_automation_screenshot.py -w <width> -h <height> -n <numOfFiles>')
         sys.exit()
     else:
         main(sys.argv[1:])
