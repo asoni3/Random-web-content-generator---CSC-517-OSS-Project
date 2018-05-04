@@ -195,13 +195,13 @@ def main():
         size = (sys.argv[2]).lower()
         
         if ((simple == 'true' or simple == 'false') and (size == 'small' or size == 'medium' or size == 'large')):
-            if simple == 'false':
+            if simple == 'true':
                 super_random_css = False
                 depth = 1
                 num_sibling_divs = 1
                 max_tree_height = 0
                 quirks_mode_possible = False
-            elif simple == 'true':
+            elif simple == 'false':
                 if size == 'small':
                     super_random_css = True
                     depth = 2
