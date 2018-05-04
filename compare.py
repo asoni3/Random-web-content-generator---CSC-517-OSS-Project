@@ -59,7 +59,7 @@ def compareImages(comparison_local_path, comparison_name, image1_local_path_and_
             cnts = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
             cnts = cnts[0] if imutils.is_cv2() else cnts[1]
             
-            md = 50
+            md = 5
             rectangles = []
             for c in cnts:
                 (x, y, w, h) = cv2.boundingRect(c)
