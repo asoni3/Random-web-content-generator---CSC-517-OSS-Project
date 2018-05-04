@@ -7,14 +7,13 @@ Created on Wed Mar 21 19:45:42 2018
 """
 import random
 import string
-import os
 import sys
 
 html = ''
 css = ''
 
 #generate a skeleton HTML file with a doctype, head element, and body element and adds CSS to it
-def RandomHtml(max_depth, super_random_css, num_sibling_divs, tree_height, quirks_mode_possible, max_headers, min_headers):
+def RandomHtml(max_depth, super_random_css, num_sibling_divs, tree_height, quirks_mode_possible, max_headers, min_headers, theSize):
     count = [0]
     max_depth = [max_depth]
     
@@ -25,12 +24,12 @@ def RandomHtml(max_depth, super_random_css, num_sibling_divs, tree_height, quirk
     yield '<html>\r\n'
     yield ' RANDOMCSSCONTENTHERETOBEPLACED '
     yield '<body>\r\n'
-    yield RandomSection(count, max_depth, num_sibling_divs, tree_height, max_headers, min_headers)
+    yield RandomSection(count, max_depth, num_sibling_divs, tree_height, max_headers, min_headers, theSize)
     yield '</body>\r\n</html>\r\n'
-    RandomCSS(count[0], super_random_css)
+    RandomCSS(count[0], super_random_css, theSize)
 
 #generate a random section
-def RandomSection(count, max_depth, num_sibling_divs, tree_height, max_headers, min_headers):
+def RandomSection(count, max_depth, num_sibling_divs, tree_height, max_headers, min_headers, theSize):
     global css
     css_contents = {}
 
@@ -46,11 +45,11 @@ def RandomSection(count, max_depth, num_sibling_divs, tree_height, max_headers, 
             yield RandomSentence(count[0])
         #Create a nested element 30% of the time
         if random.random() < .3:
-            yield NestedElement(count, max_depth, num_sibling_divs, tree_height, max_headers, min_headers)
+            yield NestedElement(count, max_depth, num_sibling_divs, tree_height, max_headers, min_headers, theSize)
         yield '</p>\r'
         yield ('\n')
 
-def NestedElement(count, max_depth, num_sibling_divs, tree_height, max_headers, min_headers):
+def NestedElement(count, max_depth, num_sibling_divs, tree_height, max_headers, min_headers, theSize):
     choose_element=[RandomSection, RandomTable, RandomOrderedList,RandomUnorderedList, RandomDiv]
         
     if max_depth[0] > 0:
@@ -58,15 +57,15 @@ def NestedElement(count, max_depth, num_sibling_divs, tree_height, max_headers, 
         chosen_element = random.choice(choose_element)
         
         if chosen_element == RandomDiv:
-            yield chosen_element(tree_height, count, max_depth, num_sibling_divs, max_headers, min_headers)
+            yield chosen_element(tree_height, count, max_depth, num_sibling_divs, max_headers, min_headers, theSize)
         elif chosen_element == RandomSection:
-            yield chosen_element(count, max_depth, num_sibling_divs, tree_height, max_headers, min_headers)
+            yield chosen_element(count, max_depth, num_sibling_divs, tree_height, max_headers, min_headers, theSize)
         else:
-            yield chosen_element()
+            yield chosen_element(theSize)
             
 #generate a random sentence using random range function
 def RandomSentence(count):
-    num_of_words = random.randrange(5, 20)
+    num_of_words = random.randrange(5, 15)
     yield RandomWord()
     for _ in range(num_of_words-1):
         #1 in 20 words will be within a span
@@ -85,9 +84,9 @@ def RandomWord():
     chars = random.randrange(2, 10)
     return ''.join(random.choice(string.ascii_lowercase) for _ in range(chars))
 
-def RandomTable():
+def RandomTable(theSize):
     column_count = random.randrange(1,10)
-    row_count = random.randrange(2,20)
+    row_count = random.randrange(2,theSize)
     yield '<table>\r\n'
     #generate table head
     yield '\t<tr>\r\n\t\t'
@@ -101,13 +100,13 @@ def RandomTable():
         yield '\t<tr>\r\n\t\t'
         for _ in range(column_count):
             yield '<td>'
-            yield str(random.randrange(0,1000))
+            yield str(random.randrange(0,50 * theSize))
             yield '</td>'
         yield '\r\n\t</tr>\r\n'
     yield '</table>\r\n'
 
-def RandomOrderedList():
-    list_length=random.randrange(1,20)
+def RandomOrderedList(theSize):
+    list_length=random.randrange(1,theSize)
     yield '<ol>\r\n'
     for _ in range(list_length):
         yield '\t<li>'
@@ -115,8 +114,8 @@ def RandomOrderedList():
         yield '</li>\r\n'
     yield '</ol>\r\n'
 
-def RandomUnorderedList():
-    list_length=random.randrange(1,20)
+def RandomUnorderedList(theSize):
+    list_length=random.randrange(1,theSize)
     yield '<ul>\r\n'
     for _ in range(list_length):
         yield '\t<li>'
@@ -124,7 +123,7 @@ def RandomUnorderedList():
         yield '</li>\r\n'
     yield '</ul>\r\n'
 
-def RandomDiv(tree_height, count, max_depth, num_sibling_divs, max_headers, min_headers):
+def RandomDiv(tree_height, count, max_depth, num_sibling_divs, max_headers, min_headers, theSize):
     numDivs = random.randint(1,num_sibling_divs)
     for i in range(0, numDivs):
         yield '<div id="a'+str(random.randrange(0,count[0]))+'">\r\n'
@@ -132,7 +131,7 @@ def RandomDiv(tree_height, count, max_depth, num_sibling_divs, max_headers, min_
         if tree_height > 0:
             treeHeight = random.randint(0, tree_height)
             if treeHeight > 0:
-                yield RandomDiv(treeHeight - 1, count, max_depth, num_sibling_divs, max_headers, min_headers)
+                yield RandomDiv(treeHeight - 1, count, max_depth, num_sibling_divs, max_headers, min_headers, theSize)
             
         yield '</div>'
 
@@ -141,7 +140,7 @@ def RandomSpan(count):
     yield RandomWord()
     yield '</span>'
     
-def RandomCSS(count, super_random_css):
+def RandomCSS(count, super_random_css, theSize):
     global css
     fonts = ['Arial','Helvetica','Times New Roman','Times','Courier New','Courier','Verdana','Georgia','Palatino','Garamond','Bookman','Comic Sans MS','Trebuchet MS','Arial Black','Impact']
     font_style = ['normal', 'italic','oblique']
@@ -158,7 +157,7 @@ def RandomCSS(count, super_random_css):
         string_css += '#a'+str(x)+' {\r\n'
         string_css += 'color: #%02X%02X%02X' %(r(),r(),r())+';\r\n'
         string_css += 'font-family: '+fonts[random.randrange(0, len(fonts))]+';\r\n'
-        string_css += 'font-size: '+str(random.randrange(10, 25)) +'px;\r\n'
+        string_css += 'font-size: '+str(random.randrange(10, 10 + theSize/2)) +'px;\r\n'
         string_css += 'font-style: '+font_style[random.randrange(0, len(font_style))]+';\r\n'
         string_css += 'font-weight: '+font_weight[random.randrange(0, len(font_weight))]+';\r\n'
         
@@ -166,9 +165,9 @@ def RandomCSS(count, super_random_css):
             string_css += 'display: ' + displayTypes[random.randint(0, 3)] + ';\r\n'
             string_css += 'background-color: rgb(' + str(random.randint(0, 255)) + ',' + str(random.randint(0, 255)) + ',' + str(random.randint(0, 255)) +');\r\n'
             string_css += 'float: ' + floatTypes[random.randint(0, 3)] + ';\r\n'
-            string_css += 'padding: ' + str(random.randint(0, 20)) + 'px ' + str(random.randint(0, 20)) + 'px ' + str(random.randint(0, 20)) + 'px ' + str(random.randint(0, 20)) + 'px;\r\n'
-            string_css += 'margin: ' + str(random.randint(0, 20)) + 'px ' + str(random.randint(0, 20)) + 'px ' + str(random.randint(0, 20)) + 'px ' + str(random.randint(0, 20)) + 'px;\r\n'
-            string_css += 'border-width: ' + str(random.randint(0, 20)) + 'px ' + str(random.randint(0, 20)) + 'px ' + str(random.randint(0, 20)) + 'px ' + str(random.randint(0, 20)) + 'px;\r\n'
+            string_css += 'padding: ' + str(random.randint(0, 10)) + 'px ' + str(random.randint(0, 10)) + 'px ' + str(random.randint(0, 10)) + 'px ' + str(random.randint(0, 10)) + 'px;\r\n'
+            string_css += 'margin: ' + str(random.randint(0, 10)) + 'px ' + str(random.randint(0, 10)) + 'px ' + str(random.randint(0, 10)) + 'px ' + str(random.randint(0, 10)) + 'px;\r\n'
+            string_css += 'border-width: ' + str(random.randint(0, 10)) + 'px ' + str(random.randint(0, 10)) + 'px ' + str(random.randint(0, 10)) + 'px ' + str(random.randint(0, 10)) + 'px;\r\n'
             string_css += 'border-style: ' + borderTypes[random.randint(0, 4)] + ';\r\n'
         
         string_css += 'text-align: '+font_align[random.randrange(0, len(font_align))]+';\r\n}\r\n'
@@ -203,24 +202,33 @@ def main():
                 max_tree_height = 0
                 quirks_mode_possible = False
             elif simple == 'true':
-                super_random_css = True
-                depth = 3
-                num_sibling_divs = 4
-                max_tree_height = 3
-                quirks_mode_possible = True
+                if size == 'small':
+                    super_random_css = True
+                    depth = 2
+                    num_sibling_divs = 2
+                    max_tree_height = 2
+                    quirks_mode_possible = True
+                else:
+                    super_random_css = True
+                    depth = 3
+                    num_sibling_divs = 3
+                    max_tree_height = 3
+                    quirks_mode_possible = True
                 
-            if size == 'small':
-                print(size)
-                max_headers = 4
+            if size == 'small': #was 4 and 2
+                max_headers = 3
                 min_headers = 2
+                theSize = 6
             elif size == 'medium':
                 max_headers = 11
                 min_headers = 8
+                theSize = 14
             elif size == 'large':
                 max_headers = 18
                 min_headers = 15
+                theSize = 22
             
-            Output(RandomHtml(depth, super_random_css, num_sibling_divs, max_tree_height, quirks_mode_possible, max_headers, min_headers))
+            Output(RandomHtml(depth, super_random_css, num_sibling_divs, max_tree_height, quirks_mode_possible, max_headers, min_headers, theSize))
             html = html.replace('RANDOMCSSCONTENTHERETOBEPLACED', css)
             
             #printing to screen as suggested by reviewers
